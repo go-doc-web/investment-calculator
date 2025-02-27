@@ -9,7 +9,7 @@ const UserInput = () => {
     setUserInput((prevInitialState) => {
       return {
         ...prevInitialState,
-        [name]: value,
+        [name]: Number(value),
       };
     });
   };
@@ -20,7 +20,7 @@ const UserInput = () => {
           <label>Initial Investment</label>
           <input
             onChange={(e) => handleChange(e)}
-            type="number"
+            type="text"
             name="initialInvestment"
             value={userInput.initialInvestment}
             required
@@ -30,7 +30,7 @@ const UserInput = () => {
           <label>Annual Investment</label>
           <input
             onChange={(e) => handleChange(e)}
-            type="number"
+            type="text"
             name="annualInvestment"
             value={userInput.annualInvestment}
             required
@@ -40,7 +40,7 @@ const UserInput = () => {
           <label>Expected Return</label>
           <input
             onChange={(e) => handleChange(e)}
-            type="number"
+            type="text"
             name="expextedReturn"
             value={userInput.expextedReturn}
             required
@@ -50,7 +50,7 @@ const UserInput = () => {
           <label>Duration</label>
           <input
             onChange={(e) => handleChange(e)}
-            type="number"
+            type="text"
             name="duration"
             value={userInput.duration}
             required
