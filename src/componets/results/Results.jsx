@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import UserInputContext from "../../context/UserInputContext";
 import {
   calculateInvestmentResults,
@@ -7,17 +7,33 @@ import {
 //TODO Сделать стили и продолжить урок и поторить контекст
 const Results = () => {
   const { userInput } = useContext(UserInputContext);
+  const [resultData, setResultData] = useState([]);
+  const [initialInvestment, setInitialInvestment] = useState(null);
 
-  const resultData = calculateInvestmentResults(userInput);
-  const initialInvestment =
-    resultData[0].valueEndOfYear -
-    resultData[0].interest -
-    resultData[0].annualInvestment;
+  useEffect(() => {
+    if (userInput) {
+      const data = calculateInvestmentResults(userInput);
+      setResultData(data);
+      if (data.length > 0) {
+        const initialInvestmentValue =
+          data[0].valueEndOfYear - data[0].interest - data[0].annualInvestment;
+        setInitialInvestment(initialInvestmentValue);
+      }
+    }
+  }, [userInput]);
 
+  if (!userInput) {
+    return <div>Loading...</div>;
+  }
+
+  if (!resultData.length || initialInvestment === null) {
+    return <div style={{ textAlign: "center" }}>No data available</div>;
+  }
   console.log("resultData", resultData);
 
   return (
     <>
+      <h2 style={{ textAlign: "center" }}>Investment Summary</h2>
       <table id="result">
         <thead>
           <tr>
@@ -47,7 +63,6 @@ const Results = () => {
           })}
         </tbody>
       </table>
-      <h2>Investment Summary</h2>
     </>
   );
 };
